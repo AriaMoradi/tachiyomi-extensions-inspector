@@ -48,12 +48,6 @@ jobs:
           mkdir -p ~/.gradle
           cp .github/runner-files/ci-gradle.properties ~/.gradle/gradle.properties
 
-      - name: Download and process android.jar
-        if: github.event_name == 'push' && github.repository == 'AriaMoradi/Tachidesk'
-        run: |
-          cd master
-          ./scripts/getAndroid.sh
-
       - name: Build Jar and launch4j
         uses: eskatos/gradle-command-action@v1
         with:
@@ -65,29 +59,21 @@ jobs:
           configuration-cache-enabled: true
 
       - name: Create repo artifacts
-        if: github.event_name == 'push' && github.repository == 'AriaMoradi/Tachidesk'
+        if: github.event_name == 'push'
 
         run: |
           cd master
           ./.github/scripts/create-repo.sh
 
-#      - name: Checkout repo branch
-#        if: github.event_name == 'push' && github.repository == 'AriaMoradi/Tachidesk'
-#        uses: actions/checkout@v2
-#        with:
-#          ref: repo
-#          path: repo
-
-      - name: Upload release binaries
-        if: github.event_name == 'push' && github.repository == 'AriaMoradi/Tachidesk'
-        uses: alexellis/upload-assets@0.2.2
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Checkout repo branch
+        if: github.event_name == 'push'
+        uses: actions/checkout@v2
         with:
-          asset_paths: '["./repo/*"]'
+          ref: repo
+          path: repo
 
-#      - name: Deploy repo
-#        if: github.event_name == 'push' && github.repository == 'AriaMoradi/Tachidesk'
-#        run: |
-#          cd repo
-#          ../master/.github/scripts/commit-repo.sh
+
+      - name: Deploy repo
+        if: github.event_name == 'push'
+          cd repo
+          ../master/.github/scripts/commit-repo.sh
