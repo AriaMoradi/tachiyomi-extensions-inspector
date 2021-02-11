@@ -75,5 +75,7 @@ jobs:
 
       - name: Deploy repo
         if: github.event_name == 'push'
+
+        run: |
           cd repo
           ../master/.github/scripts/commit-repo.sh
