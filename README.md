@@ -1,5 +1,5 @@
 # Inspector
-This is a headless fork of [Tachidesk](https://github.com/AriaMoradi/Tachidesk) that is used to inspect tachiyomi's sources.
+This is a headless fork of [Tachidesk](https://github.com/AriaMoradi/Tachidesk) that is used to inspect tachiyomi's extension sources.
 
 ## Credit
 The `AndroidCompat` module and `scripts/getAndroid.sh` was originally developed by [@null-dev](https://github.com/null-dev) for [TachiWeb-Server](https://github.com/Tachiweb/TachiWeb-server) and is licensed under `Apache License Version 2.0`.
