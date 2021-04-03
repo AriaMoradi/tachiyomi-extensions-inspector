@@ -9,7 +9,7 @@ plugins {
     id("edu.sc.seis.launch4j") version "2.4.9"
 }
 
-val TachideskVersion = "v0.2.7"
+val TachideskVersion = "v0.0.1"
 
 
 repositories {
@@ -127,7 +127,7 @@ tasks {
     }
     shadowJar {
         manifest.inheritFrom(jar.get().manifest) //will make your shadowJar (produced by jar task) runnable
-        archiveBaseName.set("Tachidesk")
+        archiveBaseName.set("Inspector")
         archiveVersion.set(TachideskVersion)
         archiveClassifier.set(TachideskRevision)
     }
