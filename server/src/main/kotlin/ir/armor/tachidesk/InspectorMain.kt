@@ -22,11 +22,13 @@ object InspectorMain {
         val outputPath = args[1]
 
         File(apksPath).list().forEach {
-            println("Installing $it")
-            if (it.endsWith("apk"))
-            runBlocking {
-                installAPK {
-                    File("$apksPath/$it").absolutePath
+            if (it.endsWith("apk")) {
+                println("Installing $it")
+
+                runBlocking {
+                    installAPK {
+                        File("$apksPath/$it").absolutePath
+                    }
                 }
             }
         }
