@@ -23,6 +23,7 @@ object InspectorMain {
 
         File(apksPath).list().forEach {
             println("Installing $it")
+            if (it.endsWith("apk"))
             runBlocking {
                 installAPK {
                     File("$apksPath/$it").absolutePath
