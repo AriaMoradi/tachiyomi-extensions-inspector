@@ -1,51 +1,23 @@
 package eu.kanade.tachiyomi.extension.api
 
-// import android.content.Context
-// import eu.kanade.tachiyomi.data.preference.PreferencesHelper
+/*
+ * Copyright (C) Contributors to the Suwayomi project
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
 import eu.kanade.tachiyomi.extension.model.Extension
 import eu.kanade.tachiyomi.extension.util.ExtensionLoader
-import ir.armor.tachidesk.database.dataclass.ExtensionDataClass
-// import kotlinx.coroutines.Dispatchers
-// import kotlinx.coroutines.withContext
+import ir.armor.tachidesk.model.dataclass.ExtensionDataClass
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-// import uy.kohesive.injekt.injectLazy
 
-internal class ExtensionGithubApi {
-
-//    private val preferences: PreferencesHelper by injectLazy()
-
-    suspend fun findExtensions(): List<Extension.Available> {
-        val service: ExtensionGithubService = ExtensionGithubService.create()
-
-        val response = service.getRepo()
-        return parseResponse(response)
-    }
-
-//    suspend fun checkForUpdates(): List<Extension.Installed> {
-//        val extensions = fin   dExtensions()
-//
-// //        preferences.lastExtCheck().set(Date().time)
-//
-//        val installedExtensions = ExtensionLoader.loadExtensions(context)
-//            .filterIsInstance<LoadResult.Success>()
-//            .map { it.extension }
-//
-//        val extensionsWithUpdate = mutableListOf<Extension.Installed>()
-//        for (installedExt in installedExtensions) {
-//            val pkgName = installedExt.pkgName
-//            val availableExt = extensions.find { it.pkgName == pkgName } ?: continue
-//
-//            val hasUpdate = availableExt.versionCode > installedExt.versionCode
-//            if (hasUpdate) {
-//                extensionsWithUpdate.add(installedExt)
-//            }
-//        }
-//
-//        return extensionsWithUpdate
-//    }
+object ExtensionGithubApi {
+    const val BASE_URL = "https://raw.githubusercontent.com"
+    const val REPO_URL_PREFIX = "$BASE_URL/tachiyomiorg/tachiyomi-extensions/repo"
 
     private fun parseResponse(json: JsonArray): List<Extension.Available> {
         return json
@@ -68,16 +40,14 @@ internal class ExtensionGithubApi {
             }
     }
 
-    fun getApkUrl(extension: Extension.Available): String {
-        return "$REPO_URL_PREFIX/apk/${extension.apkName}"
+    suspend fun findExtensions(): List<Extension.Available> {
+        val service: ExtensionGithubService = ExtensionGithubService.create()
+
+        val response = service.getRepo()
+        return parseResponse(response)
     }
 
     fun getApkUrl(extension: ExtensionDataClass): String {
         return "$REPO_URL_PREFIX/apk/${extension.apkName}"
-    }
-
-    companion object {
-        const val BASE_URL = "https://raw.githubusercontent.com/"
-        const val REPO_URL_PREFIX = "${BASE_URL}inorichi/tachiyomi-extensions/repo"
     }
 }

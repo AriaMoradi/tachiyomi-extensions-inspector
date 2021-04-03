@@ -18,9 +18,7 @@ repositories {
 
 dependencies {
     // Android stub library
-//    compileOnly( fileTree(File(rootProject.rootDir, "libs/android"), include: "*.jar")
     implementation(fileTree("lib/"))
-    implementation(fileTree("${rootProject.rootDir}/server/lib/dex2jar/"))
 
 
     // Android JAR libs
@@ -32,19 +30,14 @@ dependencies {
     // Javassist
     compileOnly( "org.javassist:javassist:3.27.0-GA")
 
-    // Coroutines
-    val kotlinx_coroutines_version = "1.4.2"
-    compileOnly( "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version")
-    compileOnly( "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$kotlinx_coroutines_version")
-
     // XML
     compileOnly( group= "xmlpull", name= "xmlpull", version= "1.1.3.1")
 
     // Config API
-    implementation( project(":AndroidCompat:Config"))
+    implementation(project(":AndroidCompat:Config"))
 
-    // dex2jar
-//    compileOnly( "dex2jar:dex-translator")
+    // dex2jar: https://github.com/DexPatcher/dex2jar/releases/tag/v2.1-20190905-lanchon
+    compileOnly("com.github.DexPatcher.dex2jar:dex-tools:v2.1-20190905-lanchon")
 
     // APK parser
     compileOnly("net.dongliu:apk-parser:2.6.10")
@@ -55,7 +48,11 @@ dependencies {
     // AndroidX annotations
     compileOnly( "androidx.annotation:annotation:1.2.0-alpha01")
 
-//    compileOnly("io.reactivex:rxjava:1.3.8")
+    // substitute for duktape-android
+    // 'org.mozilla:rhino' includes some code that we don't need so use 'org.mozilla:rhino-runtime' instead
+    implementation("org.mozilla:rhino-runtime:1.7.13")
+    // 'org.mozilla:rhino-engine' provides the same interface as 'javax.script' a.k.a Nashorn
+    implementation("org.mozilla:rhino-engine:1.7.13")
 }
 
 //def fatJarTask = tasks.getByPath(':AndroidCompat:JVMPatch:fatJar')

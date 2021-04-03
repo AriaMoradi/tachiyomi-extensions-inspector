@@ -6,13 +6,14 @@ plugins {
 }
 
 allprojects {
-    group = "xyz.nulldev.ts"
+    group = "ir.armor.tachidesk"
 
     version = "1.0"
 
     repositories {
         jcenter()
         mavenCentral()
+        maven("https://maven.google.com/")
         maven("https://jitpack.io")
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
         maven("https://dl.bintray.com/inorichi/maven")
@@ -20,13 +21,13 @@ allprojects {
     }
 }
 
-val javaProjects = listOf(
+val projects = listOf(
         project(":AndroidCompat"),
         project(":AndroidCompat:Config"),
         project(":server")
 )
 
-configure(javaProjects) {
+configure(projects) {
     apply(plugin = "java")
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
@@ -45,23 +46,21 @@ configure(javaProjects) {
         // Kotlin
         implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
         implementation(kotlin("stdlib", KotlinCompilerVersion.VERSION))
+        implementation(kotlin("reflect", version = "1.4.21"))
         testImplementation(kotlin("test", version = "1.4.21"))
-    }
-}
 
-configure(listOf(
-        project(":AndroidCompat"),
-        project(":server"),
-        project(":AndroidCompat:Config")
+        // coroutines
+        val coroutinesVersion = "1.4.2"
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
 
-)) {
-    dependencies {
+
         // Dependency Injection
         implementation("org.kodein.di:kodein-di-conf-jvm:7.1.0")
 
         // Logging
         implementation("org.slf4j:slf4j-api:1.7.30")
-        implementation("org.slf4j:slf4j-simple:1.7.30")
+        implementation("ch.qos.logback:logback-classic:1.2.3")
         implementation("io.github.microutils:kotlin-logging:2.0.3")
 
         // RxJava
@@ -71,10 +70,12 @@ configure(listOf(
         // JSoup
         implementation("org.jsoup:jsoup:1.13.1")
 
-        // Kotlin
-        implementation(kotlin("reflect", version = "1.4.21"))
 
         // dependency of :AndroidCompat:Config
         implementation("com.typesafe:config:1.4.0")
+        implementation("io.github.config4k:config4k:0.4.2")
+
+        // to get application content root
+        implementation("net.harawata:appdirs:1.2.0")
     }
 }
