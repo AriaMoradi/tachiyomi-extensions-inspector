@@ -1,6 +1,9 @@
 #!/bin/bash
 
 cp ../master/repo/* .
+
+echo $(ls -la)
+
 new_jar_build=$(ls *.jar| tail -1)
 echo "last jar build file name: $new_jar_build"
 

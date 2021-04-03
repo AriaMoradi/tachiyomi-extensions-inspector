@@ -13,7 +13,7 @@ import java.io.File
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 object InspectorMain {
-    fun inspectorMain(args: Array<String>){
+    fun inspectorMain(args: Array<String>) {
         if (args.size < 2) {
             throw RuntimeException("Inspector must be given the path of apks directory and ")
         }
