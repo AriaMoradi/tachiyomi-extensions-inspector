@@ -68,6 +68,12 @@ jobs:
           cd master
           ./.github/scripts/create-repo.sh
 
+      - name: Checkout repo branch
+        uses: actions/checkout@v2
+        with:
+          ref: repo
+          path: repo
+
       - name: Deploy repo
         if: github.event_name == 'push'
 
