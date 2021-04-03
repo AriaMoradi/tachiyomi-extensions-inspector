@@ -75,12 +75,12 @@ fun applicationSetup() {
     makeDataBaseTables()
 
     // create system tray
-    if (serverConfig.systemTrayEnabled)
-        try {
-            systemTray
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+//    if (serverConfig.systemTrayEnabled)
+//        try {
+//            systemTray
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
 
     // Load config API
     DI.global.addImport(ConfigKodeinModule().create())

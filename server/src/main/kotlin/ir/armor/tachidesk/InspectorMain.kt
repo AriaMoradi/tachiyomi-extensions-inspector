@@ -25,7 +25,7 @@ object InspectorMain {
             println("Installing $it")
             runBlocking {
                 installAPK {
-                    it
+                    File("$apksPath/$it").absolutePath
                 }
             }
         }

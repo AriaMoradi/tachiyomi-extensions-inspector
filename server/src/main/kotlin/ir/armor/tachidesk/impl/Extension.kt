@@ -118,10 +118,12 @@ object Extension {
         val extensionRecord: ResultRow = transaction {
             ExtensionTable.select { ExtensionTable.apkName eq apkName }.firstOrNull()
         } ?: {
-            ExtensionTable.insert {
-                it[this.apkName] = apkName
+            transaction {
+                ExtensionTable.insert {
+                    it[this.apkName] = apkName
+                }
+                ExtensionTable.select { ExtensionTable.apkName eq apkName }.firstOrNull()!!
             }
-            ExtensionTable.select { ExtensionTable.apkName eq apkName }.firstOrNull()!!
         }()
 
         val extensionId = extensionRecord[ExtensionTable.id]
@@ -140,7 +142,7 @@ object Extension {
             dex2jar(dexFilePath, jarFilePath, fileNameWithoutType)
 
             // clean up
-            File(apkFilePath).delete()
+//            File(apkFilePath).delete()
             File(dexFilePath).delete()
 
             // update sources of the extension
