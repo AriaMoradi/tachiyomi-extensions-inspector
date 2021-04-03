@@ -105,7 +105,7 @@ object Extension {
                 throw Exception("Package $pkgName isn't signed")
             } else if (signatureHash !in trustedSignatures) {
                 // TODO: allow trusting keys
-                throw Exception("This apk is not a signed with the official tachiyomi signature")
+                throw Exception("This apk is not a signed with the official Tachiyomi signature")
             }
 
             val isNsfw = packageInfo.applicationInfo.metaData.getString(METADATA_NSFW) == "1"
