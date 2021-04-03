@@ -124,10 +124,7 @@ object Extension {
             val sources: List<CatalogueSource> = when (val instance = loadExtensionSources(jarFilePath, className)) {
                 is Source -> listOf(instance)
                 is SourceFactory -> instance.createSources()
-
-                else -> {
-                    throw RuntimeException("Unknown source class type! ${instance.javaClass}")
-                }
+                else -> throw RuntimeException("Unknown source class type! ${instance.javaClass}")
             }.map { it as CatalogueSource }
 
             val langs = sources.map { it.lang }.toSet()
