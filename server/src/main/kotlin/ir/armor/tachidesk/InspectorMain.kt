@@ -1,5 +1,7 @@
 package ir.armor.tachidesk
 
+import java.io.File
+
 /*
  * Copyright (C) Contributors to the Suwayomi project
  * 
