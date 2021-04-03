@@ -1,5 +1,8 @@
 package ir.armor.tachidesk
 
+import ir.armor.tachidesk.impl.Extension.installAPK
+import ir.armor.tachidesk.impl.Source.getSourceList
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 /*
@@ -19,8 +22,12 @@ object InspectorMain {
         val outputPath = args[1]
 
         File(apksPath).list().forEach {
-            println("install $it")
-            installAPK(it, apksPath)
+            println("Installing $it")
+            runBlocking {
+                installAPK {
+                    it
+                }
+            }
         }
 
         File(outputPath).printWriter().use { out ->
